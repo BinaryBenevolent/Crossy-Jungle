@@ -6,11 +6,6 @@ public class Terrain : MonoBehaviour
 {
     [SerializeField] GameObject tilePrefab;
 
-    private void Start()
-    {
-        Generate(5);
-    }
-
     public virtual void Generate(int size)
     {
         if (size == 0)
@@ -26,11 +21,13 @@ public class Terrain : MonoBehaviour
             SpawnTile(i);
         }
 
-        var leftBoundaryTile = SpawnTile(-moveLimit - 1);
-        var rightBoundaryTile = SpawnTile(moveLimit + 1);
+        int grayedOutTile = 1;
 
-        DarkenObject(leftBoundaryTile);
-        DarkenObject(rightBoundaryTile);
+        for (int i = 1; i <= grayedOutTile; i++)
+        {
+            DarkenObject(SpawnTile(-moveLimit - i));
+            DarkenObject(SpawnTile(moveLimit + i));
+        }
     }
 
     private GameObject SpawnTile(int xPos)
