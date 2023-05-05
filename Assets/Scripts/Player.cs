@@ -6,8 +6,8 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField, Range(0,1)] float moveDuration = 0.1f;
-    [SerializeField, Range(0, 1)] float jumpHeight = 0.3f;
+    [SerializeField, Range(0,1)] private float moveDuration = 0.1f;
+    [SerializeField, Range(0, 1)] private float jumpHeight = 0.3f;
 
     public UnityEvent<Vector3> OnJumpEnd;
 

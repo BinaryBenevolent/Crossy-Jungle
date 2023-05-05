@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Terrain : MonoBehaviour
 {
-    [SerializeField] GameObject tilePrefab;
+    [SerializeField] private GameObject tilePrefab;
 
     public virtual void Generate(int size)
     {
