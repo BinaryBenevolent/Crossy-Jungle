@@ -380,6 +380,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48a0b0b47475e4b4e9a8518592008b04, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  player: {fileID: 1286980123}
   terrainList:
   - {fileID: 256946161532457704, guid: 982839c7d5161b749b6ca6468d2b26f9, type: 3}
   - {fileID: 3976809208796431624, guid: 39ac35914c00ba44db6c2b9afe82c6f7, type: 3}
@@ -390,6 +391,7 @@ MonoBehaviour:
   backViewDistance: -4
   forwardViewDistance: 15
   treeProbability: 0.3
+  travelDistance: 0
 --- !u!4 &235374924
 Transform:
   m_ObjectHideFlags: 0
@@ -2130,6 +2132,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDuration: 0.1
   jumpHeight: 0.3
+  OnJumpEnd:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 235374923}
+        m_TargetAssemblyTypeName: PlayManager, Assembly-CSharp
+        m_MethodName: UpdateTravelDistance
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1465299878
 GameObject:
   m_ObjectHideFlags: 0

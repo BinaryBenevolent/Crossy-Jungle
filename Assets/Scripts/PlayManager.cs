@@ -4,21 +4,24 @@ using UnityEngine;
 
 public class PlayManager : MonoBehaviour
 {
+    [SerializeField] private Player player;
 
-    [SerializeField] List<Terrain> terrainList;  
+    [SerializeField] private List<Terrain> terrainList;  
 
-    [SerializeField] Grass grassPrefab;
-    [SerializeField] Road roadPrefab;
+    [SerializeField] private Grass grassPrefab;
+    [SerializeField] private Road roadPrefab;
 
-    [SerializeField] int initialGrassCount = 5;
-    [SerializeField] int horizontalSize;
+    [SerializeField] private int initialGrassCount = 5;
+    [SerializeField] private int horizontalSize;
 
-    [SerializeField] int backViewDistance = -4;
-    [SerializeField] int forwardViewDistance = 15; 
+    [SerializeField] private int backViewDistance = -4;
+    [SerializeField] private int forwardViewDistance = 15; 
 
-    [SerializeField, Range(0,1)] float treeProbability;
+    [SerializeField, Range(0,1)] private float treeProbability;
 
-    Dictionary<int, Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
+    private Dictionary<int, Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
+
+    [SerializeField] private int travelDistance;
 
     private void Start()
     {
@@ -114,5 +117,18 @@ public class PlayManager : MonoBehaviour
         terrain.transform.position = new Vector3(0, 0, zPos);
 
         return terrain;
+    }
+
+    private void Update()
+    {
+        
+    }
+
+    public void UpdateTravelDistance(Vector3 targetPosition)
+    {
+        if (targetPosition.z > travelDistance)
+        {
+            travelDistance = Mathf.CeilToInt(targetPosition.z);
+        }
     }
 }
