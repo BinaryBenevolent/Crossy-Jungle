@@ -16,7 +16,7 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private int horizontalSize;
 
     [SerializeField] private int backViewDistance = -4;
-    [SerializeField] private int forwardViewDistance = 15; 
+    [SerializeField] private int forwardViewDistance = 15;
 
     private Dictionary<int, Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
 

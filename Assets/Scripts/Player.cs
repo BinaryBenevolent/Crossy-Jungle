@@ -74,6 +74,11 @@ public class Player : MonoBehaviour
         transform.forward = direction;
     }
 
+    public void SetNotMoveable(bool value)
+    {
+        isNotAbleToMove = value;
+    }
+
     public void UpdateMoveLimit(int horizontalSize, int backLimit)
     {
         leftMoveLimit = -horizontalSize / 2;
