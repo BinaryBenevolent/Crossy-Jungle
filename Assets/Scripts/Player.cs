@@ -15,6 +15,8 @@ public class Player : MonoBehaviour
 
     public UnityEvent<Vector3> OnJumpEnd;
 
+    public UnityEvent<int> OnGetCoin;
+
     private bool isDead = false;
 
     private void Update()
@@ -86,13 +88,19 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Collide");
-
-        if(isDead == false)
+        if(other.CompareTag("Elephant"))
         {
-            transform.DOScaleY(0.1f, 0.2f);
-        }
+            if (isDead == true)
+                return;
 
-        isDead = true;
+            transform.DOScaleY(0.1f, 0.2f);
+            isDead = true;
+        }
+        else if (other.CompareTag("Coin"))
+        {
+            var coin = other.GetComponent <Coin>();
+            OnGetCoin.Invoke(coin.Value);
+            coin.Collected();
+        }
     }
 }
