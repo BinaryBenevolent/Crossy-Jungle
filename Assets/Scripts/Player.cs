@@ -9,6 +9,10 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0,1)] private float moveDuration = 0.1f;
     [SerializeField, Range(0, 1)] private float jumpHeight = 0.3f;
 
+    [SerializeField] private int leftMoveLimit;
+    [SerializeField] private int rightMoveLimit;
+    [SerializeField] private int backMoveLimit;
+
     public UnityEvent<Vector3> OnJumpEnd;
 
     private void Update()
@@ -44,9 +48,30 @@ public class Player : MonoBehaviour
 
     private void Move(Vector3 direction)
     {
-        transform.DOJump(transform.position + direction, jumpHeight, 1, moveDuration).onComplete = BroadCastPositionOnJumpEnd;
+        var targetPosition = transform.position + direction;
+
+        if (targetPosition.x < leftMoveLimit
+            || targetPosition.x > rightMoveLimit
+            || targetPosition.z < backMoveLimit
+            || Tree.AllPositions.Contains(targetPosition))
+        { 
+            targetPosition = transform.position;
+        }
+
+        transform.DOJump(
+            targetPosition,
+            jumpHeight,
+            1,
+            moveDuration).onComplete = BroadCastPositionOnJumpEnd;
 
         transform.forward = direction;
+    }
+
+    public void UpdateMoveLimit(int horizontalSize, int backLimit)
+    {
+        leftMoveLimit = -horizontalSize / 2;
+        rightMoveLimit = horizontalSize / 2;
+        backMoveLimit = backLimit;
     }
 
     private void BroadCastPositionOnJumpEnd()
