@@ -14,14 +14,14 @@ public class Player : MonoBehaviour
     [SerializeField] private int backMoveLimit;
 
     public UnityEvent<Vector3> OnJumpEnd;
-
     public UnityEvent<int> OnGetCoin;
+    public UnityEvent OnDie;
 
-    private bool isDead = false;
+    private bool isNotAbleToMove = false;
 
     private void Update()
     {
-        if (isDead)
+        if (isNotAbleToMove)
             return;
 
         if (DOTween.IsTweening(transform))
@@ -74,6 +74,11 @@ public class Player : MonoBehaviour
         transform.forward = direction;
     }
 
+    public void SetNotMoveable(bool value)
+    {
+        isNotAbleToMove = value;
+    }
+
     public void UpdateMoveLimit(int horizontalSize, int backLimit)
     {
         leftMoveLimit = -horizontalSize / 2;
@@ -90,11 +95,14 @@ public class Player : MonoBehaviour
     {
         if(other.CompareTag("Elephant"))
         {
-            if (isDead == true)
+            if (isNotAbleToMove == true)
                 return;
 
             transform.DOScaleY(0.1f, 0.2f);
-            isDead = true;
+
+            isNotAbleToMove = true;
+
+            Invoke("Die", 3);
         }
         else if (other.CompareTag("Coin"))
         {
@@ -102,5 +110,18 @@ public class Player : MonoBehaviour
             OnGetCoin.Invoke(coin.Value);
             coin.Collected();
         }
+        else if (other.CompareTag("Terra"))
+        {
+            if(this.transform != other.transform)
+            {
+                this.transform.SetParent(other.transform);
+                Invoke("Die", 3);
+            }
+        }
+    }
+
+    private void Die()
+    {
+        OnDie.Invoke();
     }
 }

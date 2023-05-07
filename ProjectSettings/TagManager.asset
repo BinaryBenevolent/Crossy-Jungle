@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Elephant
   - Coin
+  - Terra
   layers:
   - Default
   - TransparentFX
