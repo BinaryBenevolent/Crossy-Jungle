@@ -13,7 +13,8 @@ public class Coin : MonoBehaviour
 
     public void Collected()
     {
-        this.transform.DOJump(this.transform.position, 1f, 1, 0.3f).onComplete = SelfDestruct;
+        GetComponent<Collider>().enabled = false;
+        this.transform.DOJump(this.transform.position, 1.5f, 1, 0.3f).onComplete = SelfDestruct;
     }
 
     private void SelfDestruct()

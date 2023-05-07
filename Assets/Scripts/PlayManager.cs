@@ -5,9 +5,9 @@ using UnityEngine.Events;
 
 public class PlayManager : MonoBehaviour
 {
-    [SerializeField] private Player player;
+    [SerializeField] private List<Terrain> terrainList;
 
-    [SerializeField] private List<Terrain> terrainList;  
+    [SerializeField] private List<Coin> coinList;
 
     [SerializeField] private Grass grassPrefab;
     [SerializeField] private Road roadPrefab;
@@ -120,8 +120,34 @@ public class PlayManager : MonoBehaviour
         terrain.transform.position = new Vector3(0, 0, zPos);
         terrain.Generate(horizontalSize);
         activeTerrainDict[zPos] = terrain;
+        SpawnCoin(horizontalSize, zPos);
 
         return terrain;
+    }
+
+    public Coin SpawnCoin(int horizontalSize,int zPos, float probability = 0.2f)
+    {
+        if(probability == 0)
+            return null;
+
+        List <Vector3> spawnPosCandidateList = new List<Vector3>();
+
+        for(int x = -horizontalSize/2; x <= horizontalSize/2; x++)
+        {
+            var spawnPos = new Vector3(x, 0, zPos);
+
+            if(Tree.AllPositions.Contains(spawnPos) == false)
+                spawnPosCandidateList.Add(spawnPos);
+        }
+
+        if(probability >= Random.value)
+        {
+            var index = Random.Range(0, coinList.Count);
+            var xPosIndex = Random.Range(0, spawnPosCandidateList.Count);
+            return Instantiate(coinList[index], spawnPosCandidateList[xPosIndex], Quaternion.identity);
+        }
+
+        return null;
     }
 
     public void UpdateTravelDistance(Vector3 targetPosition)
@@ -142,7 +168,7 @@ public class PlayManager : MonoBehaviour
 
     private int GetScore()
     {
-        return travelDistance + coin * 3;
+        return travelDistance + coin;
     }
 
     public void UpdateTerrain()

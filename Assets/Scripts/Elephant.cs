@@ -5,7 +5,7 @@ using DG.Tweening;
 
 public class Elephant : MonoBehaviour
 {
-    [SerializeField, Range(0,5)] float speed = 3;
+    [SerializeField, Range(1,5)] float speed = 5;
 
     Vector3 initialPosition;
 
