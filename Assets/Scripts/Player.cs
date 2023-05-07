@@ -98,7 +98,9 @@ public class Player : MonoBehaviour
         }
         else if (other.CompareTag("Coin"))
         {
-            OnGetCoin.Invoke(1);
+            var coin = other.GetComponent <Coin>();
+            OnGetCoin.Invoke(coin.Value);
+            coin.Collected();
         }
     }
 }
