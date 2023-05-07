@@ -47,7 +47,10 @@ public class Grass : Terrain
         var randomIndex = Random.Range(0, treePrefabList.Count);
         var prefab = treePrefabList[randomIndex];
 
-        var tree = Instantiate(prefab, transform);
-        tree.transform.localPosition = new Vector3(xPos, 0, 0);
+        var tree = Instantiate(
+            prefab,
+            new Vector3(xPos, 0, this.transform.position.z),
+            Quaternion.identity,
+            transform);
     }
 }

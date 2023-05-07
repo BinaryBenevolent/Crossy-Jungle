@@ -18,8 +18,6 @@ public class PlayManager : MonoBehaviour
     [SerializeField] private int backViewDistance = -4;
     [SerializeField] private int forwardViewDistance = 15; 
 
-    [SerializeField, Range(0,1)] private float treeProbability;
-
     private Dictionary<int, Terrain> activeTerrainDict = new Dictionary<int, Terrain>(20);
 
     [SerializeField] private int travelDistance;

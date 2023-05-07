@@ -50,10 +50,19 @@ public class Player : MonoBehaviour
     {
         var targetPosition = transform.position + direction;
 
-        if (targetPosition.x < leftMoveLimit || targetPosition.x > rightMoveLimit || targetPosition.z < backMoveLimit)
+        if (targetPosition.x < leftMoveLimit
+            || targetPosition.x > rightMoveLimit
+            || targetPosition.z < backMoveLimit
+            || Tree.AllPositions.Contains(targetPosition))
+        { 
             targetPosition = transform.position;
+        }
 
-        transform.DOJump(targetPosition, jumpHeight, 1, moveDuration).onComplete = BroadCastPositionOnJumpEnd;
+        transform.DOJump(
+            targetPosition,
+            jumpHeight,
+            1,
+            moveDuration).onComplete = BroadCastPositionOnJumpEnd;
 
         transform.forward = direction;
     }
