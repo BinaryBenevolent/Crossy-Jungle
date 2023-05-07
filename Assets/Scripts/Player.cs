@@ -15,8 +15,13 @@ public class Player : MonoBehaviour
 
     public UnityEvent<Vector3> OnJumpEnd;
 
+    private bool isDead = false;
+
     private void Update()
     {
+        if (isDead)
+            return;
+
         if (DOTween.IsTweening(transform))
             return;
 
@@ -77,5 +82,17 @@ public class Player : MonoBehaviour
     private void BroadCastPositionOnJumpEnd()
     {
         OnJumpEnd.Invoke(transform.position);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Collide");
+
+        if(isDead == false)
+        {
+            transform.DOScaleY(0.1f, 0.2f);
+        }
+
+        isDead = true;
     }
 }
