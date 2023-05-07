@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class Road : Terrain
 {
-    [SerializeField] Elephant elephantPrefab;
+    [SerializeField] private Elephant elephantPrefab;
 
-    [SerializeField] float minElephantSpawnInterval;
-    [SerializeField] float maxElephantSpawnInterval;
+    [SerializeField] private float minElephantSpawnInterval;
+    [SerializeField] private float maxElephantSpawnInterval;
 
-    float timer;
+    private float timer;
 
-    Vector3 elephantSpawnPosition;
-    Quaternion elephantRotation;
+    private Vector3 elephantSpawnPosition;
+    private Quaternion elephantRotation;
 
     private void Start()
     {
