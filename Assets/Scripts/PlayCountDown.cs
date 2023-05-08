@@ -9,6 +9,8 @@ public class PlayCountDown : MonoBehaviour
 {
     [SerializeField] TMP_Text tmpText;
 
+    [SerializeField] AudioSource countdownSound;
+
     public UnityEvent OnStart;
     public UnityEvent OnEnd;
 
@@ -23,6 +25,8 @@ public class PlayCountDown : MonoBehaviour
         sequence.Append(tmpText.transform.DOScale(Vector3.one, 1).OnStart(() => { tmpText.transform.localScale = Vector3.zero; tmpText.text = "2"; }));
         sequence.Append(tmpText.transform.DOScale(Vector3.one, 1).OnStart(() => { tmpText.transform.localScale = Vector3.zero; tmpText.text = "1"; }));
         sequence.Append(tmpText.transform.DOScale(Vector3.one, 1).OnStart(() => { tmpText.transform.localScale = Vector3.zero; tmpText.text = "GO"; }));
+
+        countdownSound.Play();
 
         sequence.Append(tmpText.transform.DOScale(Vector3.one, 1).OnStart(() => { OnEnd.Invoke(); }));
     }
