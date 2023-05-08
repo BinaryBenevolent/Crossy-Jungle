@@ -9,17 +9,14 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 1)] private float moveDuration = 0.1f;
     [SerializeField, Range(0, 1)] private float jumpHeight = 0.3f;
 
-    [SerializeField] private AudioSource jumpSound;
-    [SerializeField] private AudioSource coinSound;
-    [SerializeField] private AudioSource steppedSound;
-    [SerializeField] private AudioSource takenSound;
-
     [SerializeField] private int leftMoveLimit;
     [SerializeField] private int rightMoveLimit;
     [SerializeField] private int backMoveLimit;
 
     public UnityEvent<Vector3> OnJumpEnd;
     public UnityEvent<int> OnGetCoin;
+    public UnityEvent OnCollideElephant;
+    public UnityEvent OnCollideTerra;
     public UnityEvent OnDie;
 
     private bool isNotAbleToMove = false;
@@ -77,8 +74,6 @@ public class Player : MonoBehaviour
             moveDuration).onComplete = BroadCastPositionOnJumpEnd;
 
         transform.forward = direction;
-
-        jumpSound.Play();
     }
 
     public void SetNotMoveable(bool value)
@@ -105,18 +100,16 @@ public class Player : MonoBehaviour
             if (isNotAbleToMove == true)
                 return;
 
-            steppedSound.Play();
-
             transform.DOScaleY(0.1f, 0.2f);
 
             isNotAbleToMove = true;
+
+            OnCollideElephant.Invoke();
 
             Invoke("Die", 3);
         }
         else if (other.CompareTag("Coin"))
         {
-            coinSound.Play();
-
             var coin = other.GetComponent <Coin>();
             OnGetCoin.Invoke(coin.Value);
             coin.Collected();
@@ -125,9 +118,10 @@ public class Player : MonoBehaviour
         {
             if(this.transform != other.transform)
             {
-                takenSound.Play();
-
                 this.transform.SetParent(other.transform);
+
+                OnCollideTerra.Invoke();
+
                 Invoke("Die", 3);
             }
         }

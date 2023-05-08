@@ -7,7 +7,7 @@ public class AudioManager : MonoBehaviour
     [SerializeField] AudioSource bgm;
     [SerializeField] AudioSource sfx;
 
-    public void playBGM(AudioClip clip, bool loop = true)
+    public void PlayBGM(AudioClip clip, bool loop = true)
     {
         if (bgm.isPlaying)
             bgm.Stop();
@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
         bgm.Play();
     }
 
-    public void playSFX(AudioClip clip)
+    public void PlaySFX(AudioClip clip)
     {
         if(sfx.isPlaying)
             sfx.Stop();
