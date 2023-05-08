@@ -15,6 +15,7 @@ public class Player : MonoBehaviour
 
     public UnityEvent<Vector3> OnJumpEnd;
     public UnityEvent<int> OnGetCoin;
+    public UnityEvent OnCollideCoin;
     public UnityEvent OnCollideElephant;
     public UnityEvent OnCollideTerra;
     public UnityEvent OnDie;
@@ -106,12 +107,15 @@ public class Player : MonoBehaviour
 
             OnCollideElephant.Invoke();
 
-            Invoke("Die", 3);
+            Invoke("Die", 2);
         }
         else if (other.CompareTag("Coin"))
         {
+            OnCollideCoin.Invoke();
+
             var coin = other.GetComponent <Coin>();
             OnGetCoin.Invoke(coin.Value);
+            
             coin.Collected();
         }
         else if (other.CompareTag("Terra"))
@@ -122,7 +126,7 @@ public class Player : MonoBehaviour
 
                 OnCollideTerra.Invoke();
 
-                Invoke("Die", 3);
+                Invoke("Die", 2);
             }
         }
     }

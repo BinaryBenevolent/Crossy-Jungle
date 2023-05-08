@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.PlayerSettings;
 
 public class Grass : Terrain
 {
@@ -38,11 +37,14 @@ public class Grass : Terrain
             SpawnRandomTree(pos);
         }
 
-        SpawnRandomTree(-limit - 1);
-        SpawnRandomTree(limit + 1);
+        for(int i = 1; i < grayedOutTile; i++)
+        {
+            DarkenObject(SpawnRandomTree(-limit - i));
+            DarkenObject(SpawnRandomTree(limit + i));
+        }
     }
 
-    private void SpawnRandomTree(int xPos)
+    private GameObject SpawnRandomTree(int xPos)
     {
         var randomIndex = Random.Range(0, treePrefabList.Count);
         var prefab = treePrefabList[randomIndex];
@@ -52,5 +54,13 @@ public class Grass : Terrain
             new Vector3(xPos, 0, this.transform.position.z),
             Quaternion.identity,
             transform);
+        return tree;
+    }
+
+    private void DarkenObject(GameObject go)
+    {
+        var renderers = go.GetComponentInChildren<MeshRenderer>(includeInactive: true);
+
+        renderers.material.color *= new Color32(220,220,220,30);
     }
 }

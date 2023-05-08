@@ -8,6 +8,8 @@ public class Terrain : MonoBehaviour
 
     protected float horizontalSize;
 
+    protected int grayedOutTile;
+
     public virtual void Generate(int size)
     {
         horizontalSize = size;
@@ -25,7 +27,8 @@ public class Terrain : MonoBehaviour
             SpawnTile(i);
         }
 
-        int grayedOutTile = 1;
+        int grayedOutTile = 15;
+        this.grayedOutTile = grayedOutTile;
 
         for (int i = 1; i <= grayedOutTile; i++)
         {
@@ -46,6 +49,6 @@ public class Terrain : MonoBehaviour
     {
         var renderers = go.GetComponentInChildren<MeshRenderer>(includeInactive : true);
 
-        renderers.material.color *= Color.gray;
+        renderers.material.color *= new Color32(220, 220, 220, 30);
     }
 }
