@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField, Range(0,1)] private float moveDuration = 0.1f;
+    [SerializeField, Range(0, 1)] private float moveDuration = 0.1f;
     [SerializeField, Range(0, 1)] private float jumpHeight = 0.3f;
 
     [SerializeField] private int leftMoveLimit;
@@ -15,6 +15,9 @@ public class Player : MonoBehaviour
 
     public UnityEvent<Vector3> OnJumpEnd;
     public UnityEvent<int> OnGetCoin;
+    public UnityEvent OnCollideCoin;
+    public UnityEvent OnCollideElephant;
+    public UnityEvent OnCollideTerra;
     public UnityEvent OnDie;
 
     private bool isNotAbleToMove = false;
@@ -102,12 +105,17 @@ public class Player : MonoBehaviour
 
             isNotAbleToMove = true;
 
-            Invoke("Die", 3);
+            OnCollideElephant.Invoke();
+
+            Invoke("Die", 2);
         }
         else if (other.CompareTag("Coin"))
         {
+            OnCollideCoin.Invoke();
+
             var coin = other.GetComponent <Coin>();
             OnGetCoin.Invoke(coin.Value);
+            
             coin.Collected();
         }
         else if (other.CompareTag("Terra"))
@@ -115,7 +123,10 @@ public class Player : MonoBehaviour
             if(this.transform != other.transform)
             {
                 this.transform.SetParent(other.transform);
-                Invoke("Die", 3);
+
+                OnCollideTerra.Invoke();
+
+                Invoke("Die", 2);
             }
         }
     }
